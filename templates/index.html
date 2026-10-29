@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Início — Associação Comunitária Esperança{% endblock %}
+{% block content %}
+<h1>Bem-vinda(o)!</h1>
+<p>Organize os participantes e acompanhe as inscrições nas atividades da associação.</p>
+<div class="stats">
+  <section class="card stat"><h2>{{ total }}</h2><p>Participantes cadastrados</p></section>
+  <section class="card stat"><h2>{{ active }}</h2><p>Inscrições ativas</p></section>
+</div>
+<div class="actions">
+  <a class="card action-card" href="{{ url_for('participants') }}"><h2>Participantes</h2><p>Cadastrar, consultar e editar participantes.</p><span class="button">Acessar</span></a>
+  <a class="card action-card" href="{{ url_for('registrations') }}"><h2>Inscrições</h2><p>Registrar participantes nas atividades.</p><span class="button">Acessar</span></a>
+</div>
+{% endblock %}

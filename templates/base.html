@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Associação Comunitária Esperança{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}">Associação Comunitária Esperança
+    <small>Gestão de participantes e atividades</small>
+  </a>
+  {% if session.get('username') %}
+  <div class="user-area">Usuário: {{ session.get('username') }}
+    <form action="{{ url_for('logout') }}" method="post" class="inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="button button-light" type="submit">Sair</button>
+    </form>
+  </div>
+  {% endif %}
+</header>
+<div class="layout">
+  {% if session.get('user_id') %}
+  <nav class="sidebar" aria-label="Menu principal">
+    <a href="{{ url_for('index') }}">Início</a>
+    <a href="{{ url_for('participants') }}">Participantes</a>
+    <a href="{{ url_for('registrations') }}">Inscrições</a>
+  </nav>
+  {% endif %}
+  <main class="content">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ category }}" role="status">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<footer>Protótipo acadêmico — utilize somente dados fictícios.</footer>
+</body>
+</html>

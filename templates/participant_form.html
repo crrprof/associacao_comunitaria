@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if editing|default(false) else 'Novo' }} participante{% endblock %}
+{% block content %}
+<h1>{{ 'Editar participante' if editing|default(false) else 'Cadastro de participante' }}</h1>
+<p>Preencha os campos obrigatórios marcados com *.</p>
+<form method="post" class="card form-card">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="form-grid">
+  <div><label for="name">Nome do participante *</label><input id="name" name="name" maxlength="120" required value="{{ participant.get('name', '') if participant else '' }}"></div>
+  <div><label for="birth_date">Data de nascimento</label><input id="birth_date" name="birth_date" type="date" value="{{ participant.get('birth_date', '') if participant else '' }}"></div>
+  <div><label for="guardian_name">Nome do responsável *</label><input id="guardian_name" name="guardian_name" maxlength="120" required value="{{ participant.get('guardian_name', '') if participant else '' }}"></div>
+  <div><label for="guardian_phone">Telefone do responsável *</label><input id="guardian_phone" name="guardian_phone" type="tel" maxlength="30" required value="{{ participant.get('guardian_phone', '') if participant else '' }}"></div>
+</div>
+<div class="form-actions"><button class="button" type="submit">Salvar</button><a class="button button-light" href="{{ url_for('participants') }}">Cancelar</a></div>
+</form>
+{% endblock %}

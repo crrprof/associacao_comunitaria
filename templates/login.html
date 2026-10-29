@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Entrar — Associação Comunitária Esperança{% endblock %}
+{% block content %}
+<section class="card login-card">
+  <h1>Entrar no sistema</h1>
+  <p>Acesse para organizar participantes e inscrições.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="username">Usuário</label>
+    <input id="username" name="username" autocomplete="username" required>
+    <label for="password">Senha</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    <button class="button" type="submit">Entrar</button>
+  </form>
+</section>
+{% endblock %}

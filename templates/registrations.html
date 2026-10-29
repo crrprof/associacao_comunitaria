@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Inscrições{% endblock %}
+{% block content %}
+<h1>Inscrições</h1>
+<p>Registre uma inscrição e acompanhe as inscrições existentes.</p>
+<form method="post" class="card form-card">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="form-grid">
+  <div><label for="participant_id">Participante *</label>
+  <select id="participant_id" name="participant_id" required>
+    <option value="">Selecione um participante</option>
+    {% for p in participants %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}
+  </select></div>
+  <div><label for="activity_name">Atividade *</label><input id="activity_name" name="activity_name" maxlength="120" required placeholder="Ex.: Oficina de Informática"></div>
+</div>
+<button class="button" type="submit">Registrar inscrição</button>
+</form>
+<h2>Inscrições registradas</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Participante</th><th>Atividade</th><th>Data</th><th>Situação</th><th>Ação</th></tr></thead>
+<tbody>
+{% for r in registrations %}
+<tr><td>{{ r.participant_name }}</td><td>{{ r.activity_name }}</td><td>{{ r.registration_date }}</td><td><span class="status">{{ r.status }}</span></td><td>
+{% if r.status == 'Ativa' %}<form method="post" action="{{ url_for('registration_cancel', registration_id=r.id) }}" class="inline"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button button-danger button-small" type="submit">Cancelar</button></form>{% else %}—{% endif %}
+</td></tr>
+{% else %}<tr><td colspan="5">Nenhuma inscrição registrada.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}
